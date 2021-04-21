@@ -100,12 +100,14 @@ sys_write(void)
 
 	if(argfd(0, 0, &f) < 0 || argint(2, &n) < 0 || argptr(1, &p, n) < 0)
 		return -1;
-	n=filewrite(f, p, n);
-	if(filestat(f, &st) < 0 )
+
+        if(filestat(f, &st) < 0 )
 		return -1;
 	
-	if((f->ip)->major!=1 && st.type == T_FILE)	
+	if((f->ip)->major==1 && st.type == T_FILE)	
 		encript(p);
+	n=filewrite(f, p, n);
+
 	return n;
 }
 
